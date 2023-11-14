@@ -1,0 +1,8 @@
+.featured-item{
+    background-image: url('../../../assets/home/featured.jpg');
+    background-size: cover;
+    background-position: center;
+    /* opacity: 0.5; */
+    background-color: #00000097; 
+    background-blend-mode: overlay;
+}
