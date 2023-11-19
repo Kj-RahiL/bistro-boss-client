@@ -1,42 +1,55 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import bgLogin from '../../assets/others/authentication.png'
 import sideImage from '../../assets/others/authentication2.png'
 import { AuthContext } from '../../Providers/AuthProviders';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 const Login = () => {
-    const captchaRef = useRef(null)
-    const [disabled, setDisabled] = useState(true)
+  
+    const [disabled, setDisabled] = useState(true);
+    const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const {signIn} = useContext(AuthContext)
+    const from = location.state?.from?.pathname || "/";
+    console.log('state in the location login page', location.state)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
 
-
-    const handleLogin = e => {
-        e.preventDefault()
-        const form = e.target
-        const email = form.email.value
-        const password = form.password.value
-
+    const handleLogin = e=> {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
         signIn(email, password)
-        .then(result =>{
-            const user = result.user
-            console.log(user)
-        })
-
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                navigate(from, { replace: true });
+            })
+            .catch(error=>console.error(error))
     }
 
-    const handleValidateCaptcha = () => {
-        const user_captcha_value = captchaRef.current.value
-        if (validateCaptcha(user_captcha_value) == true) {
-            setDisabled(false)
+    const handleValidateCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
+        if (validateCaptcha(user_captcha_value)==true) {
+            setDisabled(false);
         }
-
         else {
-            alert('Captcha Does Not Match');
+            setDisabled(true)
         }
     }
 
@@ -71,12 +84,14 @@ const Login = () => {
                             </label>
                         </div>
                         <div className="form-control">
-                            <LoadCanvasTemplate />
-                            <input ref={captchaRef} type="text" name="captcha" placeholder="Type here" className="input input-bordered" required />
-                            <button onClick={handleValidateCaptcha} className='btn btn-ghost btn-xs btn-outline mt-4'>validate</button>
+                            <label className="label">
+                                <LoadCanvasTemplate></LoadCanvasTemplate>
+                            </label>
+                            <input onBlur={handleValidateCaptcha} type="text" name="captcha" placeholder="Type here" className="input input-bordered" />
                         </div>
                         <div className="form-control mt-6">
-                            <button disabled={disabled} className="btn text-white bg-[#D1A054] bg-opacity-70">Login</button>
+                            {/* apply disabled for re captcha */}
+                            <button disabled={false} className="btn text-white bg-[#D1A054] bg-opacity-70">Login</button>
                         </div>
                         <div>
                             <p className='text-[#D1A054] text-center'>New here? Create a <Link to='/signUp' className='text-[#68502b] font-semibold'
