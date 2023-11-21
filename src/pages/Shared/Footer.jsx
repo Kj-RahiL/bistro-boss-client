@@ -2,7 +2,7 @@
 
 const Footer = () => {
     const today = new Date().getFullYear()
-    console.log(today)
+    // console.log(today)
     return (
         <footer>
             <div className="footer p-10 bg-neutral text-neutral-content">

@@ -5,6 +5,7 @@ import sideImage from '../../assets/others/authentication2.png'
 import { AuthContext } from '../../Providers/AuthProviders';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SocialLogIn from '../../Components/CustomSharedItem/SocialLogIn';
 const Login = () => {
   
     const [disabled, setDisabled] = useState(true);
@@ -13,7 +14,7 @@ const Login = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || "/";
-    console.log('state in the location login page', location.state)
+    // console.log('state in the location login page', location.state)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -97,6 +98,8 @@ const Login = () => {
                             <p className='text-[#D1A054] text-center'>New here? Create a <Link to='/signUp' className='text-[#68502b] font-semibold'
                             >New Account</Link></p>
                         </div>
+                        <div className=' divider'>Or</div>
+                        <SocialLogIn></SocialLogIn>
                     </form>
                 </div>
             </div>

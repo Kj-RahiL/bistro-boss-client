@@ -1,9 +1,10 @@
 import { FaAd, FaAddressBook, FaCalendar, FaEnvelope, FaHome, FaList, FaMagento, FaRandom, FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import UseAdmin from "../hooks/UseAdmin";
 
 
 const Dashboard = () => {
-    const isAdmin = true
+    const [isAdmin] = UseAdmin()
     return (
         <div className="flex">
             {/* dashboard sidebar */}
@@ -23,8 +24,8 @@ const Dashboard = () => {
                             <li><NavLink to='/dashboard/manageBookings'>
                                 <FaAddressBook></FaAddressBook>Manage Bookings
                             </NavLink></li>
-                            <li><NavLink to='/dashboard/users'>
-                                <FaUser></FaUser> Users
+                            <li><NavLink to='/dashboard/allUsers'>
+                                <FaUser></FaUser> All Users
                             </NavLink></li>
                         </> :
                             <>
