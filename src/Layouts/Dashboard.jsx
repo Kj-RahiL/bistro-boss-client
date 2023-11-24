@@ -1,10 +1,12 @@
 import { FaAd, FaAddressBook, FaCalendar, FaEnvelope, FaHome, FaList, FaMagento, FaRandom, FaShoppingCart, FaUser, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import UseAdmin from "../hooks/UseAdmin";
+import useCart from "../hooks/useCart";
 
 
 const Dashboard = () => {
     const [isAdmin] = UseAdmin()
+    const [cart] = useCart()
     return (
         <div className="flex">
             {/* dashboard sidebar */}
@@ -18,7 +20,7 @@ const Dashboard = () => {
                             <li><NavLink to='/dashboard/addItems'>
                                 <FaUtensils></FaUtensils> Add Items
                             </NavLink></li>
-                            <li><NavLink to='/dashboard/review'>
+                            <li><NavLink to='/dashboard/manageItems'>
                                 <FaList></FaList> Manage Items
                             </NavLink></li>
                             <li><NavLink to='/dashboard/manageBookings'>
@@ -33,14 +35,14 @@ const Dashboard = () => {
                                     <FaHome></FaHome>
                                     User Home
                                 </NavLink></li>
-                                <li><NavLink to='/dashboard/reservation'>
-                                    <FaCalendar></FaCalendar> Reservation
+                                <li><NavLink to='/dashboard/paymentHistory'>
+                                    <FaCalendar></FaCalendar> Payment History
                                 </NavLink></li>
                                 <li><NavLink to='/dashboard/review'>
                                     <FaRandom></FaRandom> Review
                                 </NavLink></li>
                                 <li><NavLink to='/dashboard/cart'>
-                                    <FaShoppingCart></FaShoppingCart>My Cart
+                                    <FaShoppingCart></FaShoppingCart>My Cart ({cart.length})
                                 </NavLink></li>
                             </>
                     }

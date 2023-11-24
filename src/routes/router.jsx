@@ -10,6 +10,12 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Layouts/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import AllUsers from "../pages/Dashboard/Allusers/AllUsers";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
+import UpdateItems from "../pages/Dashboard/UpdateItems/UpdateItems";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import AdminRoute from "./AdminRoute";
+import PaymentHistory from "../pages/Dashboard/PaymentHIstory/PaymentHistory";
   
   export const router = createBrowserRouter([
     {
@@ -53,6 +59,27 @@ import AllUsers from "../pages/Dashboard/Allusers/AllUsers";
         {
           path: 'allUsers',
           element: <AllUsers></AllUsers>
+        },
+        {
+          path: 'addItems',
+          element: <AdminRoute><AddItems></AddItems></AdminRoute>
+        },
+        {
+          path: 'manageItems',
+          element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
+        },
+        {
+          path: 'updateItems/:id',
+          element: <AdminRoute><UpdateItems></UpdateItems></AdminRoute>,
+          loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        },
+        {
+          path: 'payment',
+          element: <Payment></Payment>
+        },
+        {
+          path: 'paymentHistory',
+          element: <PaymentHistory></PaymentHistory>
         },
 
       ]
